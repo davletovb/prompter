@@ -1,0 +1,9 @@
+Werkzeug==2.2.2
+WTForms==3.0.1
+Flask==2.2.2
+Flask-Bootstrap==3.3.7
+Flask-WTF==1.0.1
+openai==0.25.0
+SQLAlchemy==1.4.45
+stripe==5.0.0
+
