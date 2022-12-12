@@ -1,0 +1,46 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}My Account{% endblock %}
+{% block body %}
+
+<div class="content-section">
+
+    <br />
+    {{ utils.flashed_messages() }}
+    <br />
+
+    <div class="center">
+
+        <h2>My Account</h2>
+
+        <br />
+
+        <p>
+            <strong>Email:</strong> {{ user_email }}
+            <strong>Payment status:</strong> {{ payment_status }}
+            <strong>Number of prompts:</strong> {{ num_prompts }}
+        </p>
+
+        <p> Change password: </p>
+        <form action="change_password" method="post">
+            <input type="password" name="old_password" placeholder="Old password">
+            <input type="password" name="new_password" placeholder="New password">
+            <input type="password" name="confirm_password" placeholder="Confirm password">
+            <input type="submit" value="Change password">
+        </form>
+
+        <form action="/process_payment" method="post">
+            <label for="tier">Payment tier:</label>
+            <select name="tier" id="tier">
+                <option value="1">1 ($50/month)</option>
+                <option value="2">2 ($100/month)</option>
+                <option value="3">3 ($200/month)</option>
+            </select>
+            <input type="submit" value="Submit payment">
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

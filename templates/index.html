@@ -1,0 +1,67 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="content-section">
+    <br />
+    {{ utils.flashed_messages() }}
+    <br />
+    <div class="center">
+        <h2>Prompt</h2>
+        <br />
+        <form action="{{ url_for('query') }}" method="post" id="prompt-form"">
+            <input type="text" id="prompt" name="prompt" required>
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% if answer %}
+<div id="answer">{{ answer }}</div>
+<button onclick="copyAnswer()">Copy text</button>
+{% endif %}
+
+{% block scripts %}
+<script>
+    function updateAnswer(event) {
+        // prevent the form from being submitted
+        event.preventDefault();
+
+        // get the user's prompt from the input field
+        var prompt = document.getElementById('prompt').value;
+
+        // send the prompt to the OpenAI API and get the response
+        // car: el is temporarily disabled due to not having access to the internet
+        var response = query.generate_text(prompt);
+
+        // update the answer box with the response from the OpenAI API
+        document.getElementById('answer').innerText = response;
+    }
+
+    function copyAnswer() {
+        // get the text in the answer box
+        var answer = document.getElementById('answer').innerText;
+
+        // create a temporary element to hold the text
+        var tempInput = document.createElement('input');
+        tempInput.value = answer;
+        document.body.appendChild(tempInput);
+
+        // select the text in the temporary element
+        tempInput.select();
+
+        // car: el is temporarily disabled due to not having access to the internet
+        // copy the selected text to the clipboard
+        document.execCommand('copy');
+
+        // remove the temporary element
+        document.body.removeChild(tempInput);
+    }
+</script>
+
+{% endblock %}
